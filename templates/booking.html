@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block container %}
+  <main class="container mt-3">
+    <div class="row mt-5">
+      <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
+        <form action="/submit" class="card mb-3" method="post">
+          <div class="card-body text-center pt-5">
+            <img src= {{ teacher.picture }} class="mb-3" width="95" alt="">
+            <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name}}</h2>
+            <p class="my-1">Запись на пробный урок</p>
+            <p class="my-1">{{ days[form.week.data] }}, {{ form.time.data }}:00</p>
+          </div>
+          <hr />
+          <div class="card-body mx-3">
+            {% if form.errors %}
+                <ul class="errors">
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li>{{ form[field_name].label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+              <div class="row">
+                  {{ form.time(class_="form-control") }}
+                  {{ form.week(class_="form-control") }}
+                  {{ form.teacher(class_="form-control") }}
+              </div>
+                {{ form.csrf_token }}
+                <label class="mb-1 mt-2" for="clientName">Вас зовут</label>
+                {{ form.name(class_="form-control") }}
+                <label class="mb-1 mt-2" for="clientPhone">Ваш телефон</label>
+                {{ form.phone(class_="form-control") }}
+                {{ form.submit(class_="btn btn-primary btn-block mt-4") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}

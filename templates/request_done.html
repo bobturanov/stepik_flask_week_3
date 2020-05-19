@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block container %}
+  <main class="container mt-3">
+    <!-- HERO -->
+    <div class="row mt-5">
+      <div class="col-10 col-md-6 offset-1 offset-md-3">
+        <div class="card mb-3">
+          <div class="card-body text-center pt-5">
+            <img src="../static/check.png" class="mb-3" width="65" alt="">
+            <h2 class="h3 card-title mt-4 mb-2">Запрос отправлен!</h2>
+            <p>Скоро мы вам перезвоним</p>
+          </div>
+          <hr />
+          <div class="card-body mx-5">
+            <p><b>Цель занятий:</b> {{ goals[form.goal] }}</p>
+            <p><b>Времени есть:</b> {{ form.time }} часа в неделю</p>
+            <p><b>Имя:</b> {{ form.name }}</p>
+            <p><b>Телефон:</b> {{ form.phone }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

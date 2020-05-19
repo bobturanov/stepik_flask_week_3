@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block container %}
+  <main class="container mt-3">
+    <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4"><strong>{{ emojis[goal] }}<br />Преподаватели <br> {{ goals[goal][0]|lower }}{{ goals[goal][1:] }}</strong></h1>
+
+      <div class="row">
+      <div class="col-12 col-lg-10 offset-lg-1 m-auto">
+      {% for id, spec in teachers.items() %}
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3"><img src={{ spec.picture }} class="img-fluid" alt=""></div>
+              <div class="col-9">
+                <p class="float-right">Рейтинг: {{ spec.rating }} Ставка: {{ spec.price }} / час</p>
+                <h2 class="h4">{{ spec.name }}</h2>
+                <p>{{ spec.about }}</p>
+                <a href="/profiles/{{ id }}" class="btn btn-outline-primary btn-sm mr-3 mb-2">Показать информаци и расписание</a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    <h2 class="text-center mt-5 mb-3">Не нашли своего репетитора?</h2>
+    <p class="text-center mb-4">Расскажите, кто вам нужен и мы подберем его сами</p>
+    <div class="text-center pb-5">
+        <a href="/request" class="btn btn-primary">Заказать подбор</a>
+    </div>
+
+  </main>
+{% endblock %}
