@@ -103,7 +103,7 @@ def save_application(form):
         data = json.load(json_data)
         json_data.seek(0)
         json_data.truncate(0)
-        data['teachers'][teacher_id]['free'][user_week][f"{user_time}:00"] = False
+        data['teachers'][teacher_id]['free'][user_week][f'{user_time}:00'] = False
         json.dump(data, json_data, ensure_ascii=False)
 
     pk = f'{teacher_id}_{user_time}_{user_week}'
