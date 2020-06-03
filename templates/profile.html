@@ -29,7 +29,7 @@
                 {% for time, free in times.items() %}
                     {% if free %}
                         {% set status.flag = false %}
-                        <a href="/booking/{{ teacher.id }}/{{ day }}/{{ time[:2] }}" class="btn btn-outline-success mr-2">{{ time }} свободно</a>
+                        <a href="{{ url_for('render_booking', teacher_id=teacher.id, week=day, time=time[:2]) }}" class="btn btn-outline-success mr-2">{{ time }} свободно</a>
                     {% endif %}
                 {% endfor %}
                 {% if status.flag %}
