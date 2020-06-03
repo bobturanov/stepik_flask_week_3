@@ -15,29 +15,29 @@ from settings import get_csrf
 
 app = Flask(__name__)
 app.secret_key = get_csrf()
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 teachers_goals_association = db.Table(
-    "teachers_goals",
-    db.Column("teacher_id", db.Integer, db.ForeignKey("teacher.id")),
-    db.Column("goal_id", db.Integer, db.ForeignKey("goal.id")),
+    'teachers_goals',
+    db.Column('teacher_id', db.Integer, db.ForeignKey('teacher.id')),
+    db.Column('goal_id', db.Integer, db.ForeignKey('goal.id')),
 )
 
 
 class Goal(db.Model):
-    __tablename__ = "goal"
+    __tablename__ = 'goal'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     slug = db.Column(db.String(255), nullable=False)
-    teacher = db.relationship("Teacher", secondary=teachers_goals_association, back_populates="goals")
+    teacher = db.relationship('Teacher', secondary=teachers_goals_association, back_populates='goals')
 
 
 class Teacher(db.Model):
-    __tablename__ = "teacher"
+    __tablename__ = 'teacher'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
@@ -46,28 +46,28 @@ class Teacher(db.Model):
     picture = db.Column(db.String)
     price = db.Column(db.Integer)
     free = db.Column(JSON)
-    goals = db.relationship("Goal", secondary=teachers_goals_association, back_populates="teacher")
-    booking = db.relationship("Booking", back_populates="teacher")
+    goals = db.relationship('Goal', secondary=teachers_goals_association, back_populates='teacher')
+    booking = db.relationship('Booking', back_populates='teacher')
 
 
 class Booking(db.Model):
-    __tablename__ = "booking"
+    __tablename__ = 'booking'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(18), nullable=False)
     day = db.Column(db.String, nullable=False)
     time = db.Column(db.String, nullable=False)
-    teacher_id = db.Column(db.Integer, db.ForeignKey("teacher.id"))
-    teacher = db.relationship("Teacher", back_populates="booking")
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    teacher = db.relationship('Teacher', back_populates='booking')
 
 
 class Request(db.Model):
-    __tablename__ = "request"
+    __tablename__ = 'request'
 
     id = db.Column(db.Integer, primary_key=True)
-    goal_id = db.Column(db.Integer, db.ForeignKey("goal.id"))
-    goal = db.relationship("Goal")
+    goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
+    goal = db.relationship('Goal')
     time = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     phone = db.Column(db.String(14), nullable=False)
@@ -95,7 +95,7 @@ def save_application(form) -> NoReturn:
 
     teacher = db.session.query(Teacher).get(int(teacher_id))
     teacher.free[user_week][f'{user_time}:00'] = False
-    flag_modified(teacher, "free")
+    flag_modified(teacher, 'free')
 
     booking = Booking(name=form.data['name'],
                       phone=form.data['phone'],
